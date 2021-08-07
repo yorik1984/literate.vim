@@ -5,6 +5,10 @@ let b:did_ftplugin = 1
 
 setlocal expandtab
 
+if !exists('g:literate_bin')
+    let g:literate_bin = 'lit'
+endif
+
 let s:codetypeline_num = search("^@code_type", "n")
 let s:codetypeline = getline(s:codetypeline_num)
 
@@ -18,6 +22,7 @@ endif
 function! EnableLinter()
     if exists(":Neomake") == 2
         let g:neomake_literate_lit_maker = {
+                \ 'exe': g:literate_bin,
                 \ 'args': ['--compiler'],
                 \ 'errorformat':
                     \ '%f:%l:%trror: %m,' .
@@ -62,7 +67,7 @@ function! LitCode()
         return
     endif
     exec "noautocmd w"
-    exec "silent !lit -t %"
+    exec "silent !". g:literate_bin. " -t %"
 
     let splits = map(range(1, winnr('$')), 'fnamemodify(bufname(winbufnr(v:val)), ":t")')
 
@@ -75,7 +80,7 @@ endfunc
 
 function! LitHtml()
     exec "w"
-    exec "silent !lit -w %"
+    exec "silent !". g:literate_bin. " -w %"
     exec "silent !open %:r.html"
     exec "redraw!"
 endfunc
@@ -84,10 +89,10 @@ if !exists('g:literate_find_codeblock')
     let g:literate_find_codeblock = '<C-]>'
 endif
 if !exists('g:literate_open_code')
-    let g:literate_open_code = '<leader>c'
+    let g:literate_open_code = '<leader>C'
 endif
 if !exists('g:literate_open_html')
-    let g:literate_open_html = '<leader>h'
+    let g:literate_open_html = '<leader>H'
 endif
 
 execute "autocmd FileType literate" "nnoremap <buffer>" g:literate_find_codeblock ":call FindCodeblock()<CR>"
