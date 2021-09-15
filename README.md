@@ -38,8 +38,9 @@ Then add the following to your `~/.ctags` file:
 --regex-literate=/^---[ \t](.+)/\1/c,code/i
 --regex-literate=/@{(.*)}/\1/i,includes/i
 ```
-⚡️Neovim >= 0.5
-You can use [vista.vim](https://github.com/liuchengxu/vista.vim) with [universal-ctags](https://github.com/universal-ctags/ctags).
+⚠️**Only** Neovim >= 0.5
+
+Use [vista.vim](https://github.com/liuchengxu/vista.vim) with [universal-ctags](https://github.com/universal-ctags/ctags).
 Add settings to `~/.ctags.d/lit.ctags` on Linux or `$HOME\ctags.d\lit.ctags` on Windows.
 
 
